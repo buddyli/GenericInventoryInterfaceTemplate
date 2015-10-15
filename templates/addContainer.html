@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block header %}
+<h1>Add Container</h1>
+{% endblock %}
+{% block content %}
+<form class="form-horizontal" action="{{ url_for('addContainer') }}" method="post" onsubmit="return confirm('Please double check the information.')">
+  <div class="form-group">
+    <label class="control-label col-md-2" for="sampleName">Sample Name:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="sampleName"
+        {% if sampleName %} value="{{ sampleName }}" readonly
+        {% elif prev['sampleName'] %} value="{{ prev['sampleName'] }}" {% endif %} required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="containerType">Container Type:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="containerType"
+        value="{{ prev['containerType'] if prev['containerType'] }}">
+    </div>
+    <label class="control-label col-md-2" for="barcode">Barcode:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="barcode"
+        value="{{ prev['barcode'] if prev['barcode'] }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="amount">Amount:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="number" name="amount" min="0" step="any"
+        value="{{ prev['amount'] if prev['amount'] }}" required>
+    </div>
+    <label class="control-label col-md-2" for="amountUnits">Amount Units:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="amountUnits"
+        value="{{ prev['amountUnits'] if prev['amountUnits'] }}" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="freezer">Freezer:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="freezer"
+        value="{{ prev['freezer'] if prev['freezer'] }}">
+    </div>
+    <label class="control-label col-md-2" for="rack">Rack:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="rack"
+        value="{{ prev['rack'] if prev['rack'] }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="box">Box:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="box"
+        value="{{ prev['box'] if prev['box'] }}">
+    </div>
+    <label class="control-label col-md-2" for="shelf">Shelf:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="shelf"
+        value="{{ prev['shelf'] if prev['shelf'] }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="row">Row:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="number" name="row"
+        value="{{ prev['row'] if prev['row'] }}">
+    </div>
+    <label class="control-label col-md-2" for="col">Column:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="number" name="col"
+        value="{{ prev['col'] if prev['col'] }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="location">Location:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="location"
+        value="{{ prev['location'] if prev['location'] }}">
+    </div>
+    <label class="control-label col-md-2" for="storageCondition">Storage Condition:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="storageCondition"
+        value="{{ prev['storageCondition'] if prev['storageCondition'] }}">
+    </div>
+  </div>
+  <hr>
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-6">
+      <input class="form-control btn btn-primary" id="submitbutton" type="submit" value="Add Container">
+    </div>
+  </div>
+</form>
+{% endblock %}

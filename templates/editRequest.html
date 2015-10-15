@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block header %}
+<h1>Edit Request</h1>
+{% endblock %}
+{% block content %}
+<form class="form-horizontal" action="{{ url_for('editRequest', aliquotId=aliquot.aliquotId) }}" method="post" onsubmit="return confirm('Please double check the information.')">
+  <div class="form-group">
+    <label class="control-label col-md-2" for="sampleName">Sample Name:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="sampleName"
+        value="{{ aliquot.sampleName }}" readonly required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="requester">Requester:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="requester"
+        value="{{ aliquot.requester if aliquot.requester  }}" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="deliveryTo">Delivery To:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="deliveryTo"
+        value="{{ aliquot.deliveryTo if aliquot.deliveryTo }}" required>
+    </div>
+    <label class="control-label col-md-2" for="deliveryBy">Delivery By:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="deliveryBy"
+        value="{{ aliquot.deliveryBy if aliquot.deliveryBy }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="deliveryGroup">Delivery Group:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="deliveryGroup"
+        value="{{ aliquot.deliveryGroup if aliquot.deliveryGroup }}">
+    </div>
+    <label class="control-label col-md-2" for="deliveryDate">Delivery Date:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="date" name="deliveryDate"
+        value="{{ aliquot.deliveryDate if aliquot.deliveryDate }}" pattern="[\d]{4}-[\d]{2}-[\d]{2}" title="Date format is yyyy-mm-dd">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="existingAmount">Existing Amount from Chosen Container (Before Request):</label>
+    <div class="col-md-2">
+      <input class="form-control" type="number" name="existingAmount"
+        value="{{ existingAmount }}" disabled>
+    </div>
+    <label class="control-label col-md-2" for="exisitngUnits">Existing Amount Units:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="existingUnits"
+        value="{{ existingUnits }}" disabled>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="amount">Amount:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="number" name="amount" min="0" step="any"
+        value="{{ aliquot.amount if aliquot.amount }}" required>
+    </div>
+    <label class="control-label col-md-2" for="amountUnits">Amount Units:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="amountUnits"
+        value="{{ aliquot.amountUnits if aliquot.amountUnits }}" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="intendedUse">Intended Use:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="intendedUse"
+        value="{{ aliquot.intendedUse if aliquot.intendedUse }}">
+    </div>
+    <label class="control-label col-md-2" for="note">Note:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="note"
+        value="{{ aliquot.note if aliquot.note }}">
+    </div>
+  </div>
+  <hr>
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-6">
+      <input class="form-control btn btn-primary" id="submitbutton" type="submit" value="Edit Request">
+    </div>
+  </div>
+</form>
+{% endblock %}

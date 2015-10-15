@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block script %}
+<script type='text/javascript' src="{{ url_for('static', filename='scripts/chooseContainer.js') }}"></script>
+{% endblock %}
+{% block style %}
+<style>
+  #chooseHeader {
+    visibility: hidden;
+  }
+  .left {
+    display: table-row;
+  }
+  #deletedisplay, #pagination {
+    display: table-cell;
+  }
+  #containerTable {
+    font-size: 12px;
+  }
+</style>
+{% endblock %}
+{% block header %}
+<h1>Add Request</h1>
+{% endblock %}
+{% block content %}
+<form id="choose" class="form-horizontal" action="{{ url_for('addRequest') }}" method="post" onsubmit="return confirm(Please double check the information.')">
+  <div class="form-group">
+    <label class="control-label col-md-2" for="sampleName">Sample Name:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="sampleName"
+        {% if prev['sampleName'] %} value="{{ prev['sampleName'] }}"
+        {% endif %} readonly required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="requester">Requester:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="requester"
+        {% if prev['requester'] %} value="{{ prev['requester'] }}" {% endif %} readonly required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="deliveryTo">Delivery To:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="deliveryTo"
+        {% if prev['deliveryTo'] %} value="{{ prev['deliveryTo'] }}" {% endif %} readonly required>
+    </div>
+    <label class="control-label col-md-2" for="deliveryBy">Delivery By:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="deliveryBy"
+        {% if prev['deliveryBy'] %} value="{{ prev['deliveryBy'] }}" {% endif %} readonly>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="deliveryGroup">Delivery Group:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="deliveryGroup" {% if prev['deliveryGroup'] %} value="{{ prev['deliveryGroup'] }}" {% endif %} readonly>
+    </div>
+    <label class="control-label col-md-2" for="deliveryDate">Delivery Date:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="date" name="deliveryDate"
+        {% if prev['deliveryDate'] %} value="{{ prev['deliveryDate'] }}" {% endif %} readonly>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="amount">Amount:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="number" name="amount"
+        {% if prev['amount'] %} value="{{ prev['amount'] }}" {% endif %} readonly required>
+    </div>
+    <label class="control-label col-md-2" for="amountUnits">Amount Units:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="amountUnits"
+        {% if prev['amountUnits'] %} value="{{ prev['amountUnits'] }}" {% endif %} readonly required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="intendedUse">Intended Use:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="intendedUse"
+        {% if prev['intendedUse'] %} value="{{ prev['intendedUse'] }}" {% endif %} readonly>
+    </div>
+    <label class="control-label col-md-2" for="note">Note:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="note"
+        {% if prev['note'] %} value="{{ prev['note'] }}" {% endif %} readonly>
+    </div>
+  </div>
+  <hr>
+  {% if empty %}
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-4">
+      <h4> No available containers found for the specified sample name and amount</h4>
+      <a class="form-control btn btn-primary" href="javascript:history.back()">Go Back</a>
+    </div>
+  </div>
+  {% else %}
+  <table id="containerTable" class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th id="chooseHeader"></th> <!-- Choose Container -->
+        <th>Sample Name</th>
+        <th>Container Type</th>
+        <th>Barcode</th>
+        <th>Amount</th>
+        <th>Freezer</th>
+        <th>Shelf</th>
+        <th>Rack</th>
+        <th>Box</th>
+        <th>Row</th>
+        <th>Col</th>
+        <th>Location</th>
+        <th>Storage Condition</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for c in containers %}
+      <tr id="{{ c.containerId }}">
+        <td><input type="radio" name="containerId" value="{{ c.containerId }}" required title="Please choose a container"></td> <!-- Choose input -->
+        <td>{{ c.sampleName }}</td>
+        <td>{{ c.containerType }}</td>
+        <td>{{ c.barcode }}</td>
+        <td>{{ c.amount ~ " " ~ c.amountUnits }}</td>
+        <td>{{ c.freezer }}</td>
+        <td>{{ c.shelf }}</td>
+        <td>{{ c.rack }}</td>
+        <td>{{ c.box }}</td>
+        <td>{{ c.row }}</td>
+        <td>{{ c.col }}</td>
+        <td>{{ c.location }}</td>
+        <td>{{ c.storageCondition }}</td>
+        <td>{{ c.date }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-6">
+      <input type="submit" class=" form-control btn btn-primary" value="Add Request">
+    </div>
+  </div>
+  {% endif %}
+</form>
+<script>
+  $(document).ready(function() {
+     $('#containerTable').DataTable({
+       "lengthMenu": [ [50, 100, 150, -1], [50, 100, 150, "All"] ],
+       "dom": '<"left"l><"left"f><"left"<"pagination"p><"#deletedisplay">>t<"left"p>'
+     });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block header %}
+<h1>Edit Container</h1>
+{% endblock %}
+{% block content %}
+<form class="form-horizontal" action="{{ url_for('editContainer', containerId=container.containerId) }}" method="post" onsubmit="return confirm('Please double check the information.')">
+  <div class="form-group">
+    <label class="control-label col-md-2" for="sampleName">Sample Name:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="sampleName"
+        value="{{ container.sampleName }}" readonly required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="containerType">Container Type:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="containerType"
+        value="{{ container.containerType if container.containerType }}">
+    </div>
+    <label class="control-label col-md-2" for="barcode">Barcode:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="barcode"
+        value="{{ container.barcode if container.barcode }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="amount">Amount:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="number" name="amount" min="0" step="any"
+        value="{{ container.amount if container.amount }}" required>
+    </div>
+    <label class="control-label col-md-2" for="amountUnits">Amount Units:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="amountUnits"
+        value="{{ container.amountUnits if container.amountUnits }}" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="freezer">Freezer:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="freezer"
+        value="{{ container.freezer if container.freezer }}">
+    </div>
+    <label class="control-label col-md-2" for="rack">Rack:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="rack"
+        value="{{ container.rack if container.rack }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="box">Box:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="box"
+        value="{{ container.box if container.box }}">
+    </div>
+    <label class="control-label col-md-2" for="shelf">Shelf:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="shelf"
+        value="{{ container.shelf if container.shelf }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="row">Row:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="number" name="row"
+        value="{{ container.row if container.row }}">
+    </div>
+    <label class="control-label col-md-2" for="col">Column:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="number" name="col"
+        value="{{ container.col if container.col }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="location">Location:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="location"
+        value="{{ container.location if container.location }}">
+    </div>
+    <label class="control-label col-md-2" for="storageCondition">Storage Condition:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="storageCondition"
+        value="{{ container.storageCondition if container.storageCondition }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="date">Date:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="date" name="date"
+        value="{{ container.date if container.date }}" pattern="[\d]{4}-[\d]{2}-[\d]{2}" title="Date format is yyyy-mm-dd">
+    </div>
+  </div>
+  <hr>
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-6">
+      <input class="form-control btn btn-primary" id="submitbutton" type="submit" value="Edit Container">
+    </div>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block style %}
+<style>
+  #checkboxes {
+    padding-bottom: 35px;
+  }
+</style>
+{% endblock %}
+{% block header %}
+<h1>Query</h1>
+{% endblock %}
+{% block content %}
+<form class="form-horizontal" action="{{ url_for('query') }}" method="post" onsubmit="return confirm('Please double check the information.')">
+  <div class="form-group">
+    <label class="control-label col-md-2" for="sampleName">Sample Name:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="sampleName">
+    </div>
+    <label class="control-label col-md-2" for="sampleType">Sample Type:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="sampleType">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="lot">Lot:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="lot">
+    </div>
+    <label class="control-label col-md-2" for="project">Project:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="project">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="coreNumber">Core Number:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="coreNumber">
+    </div>
+    <label class="control-label col-md-2" for="parentCore">Parent Core:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="parentCore">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="source">Source:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="source">
+    </div>
+    <label class="control-label col-md-2" for="sourceNumber">Source Number:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="sourceNumber">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="barcode">Barcode:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="barcode">
+    </div>
+  </div>
+  <div class="col-md-ofset-1 col-md-12" id="checkboxes">
+    <h3>Display Columns</h3>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="checked" value="sampleName" checked> Sample Name
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="checked" value="sampleType" checked> Sample Type
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="checked" value="lot" checked> Lot
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="checked" value="project" checked> Project
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="checked" value="coreNumber" checked> Core Number
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="checked" value="parentCore" checked> Parent Core
+    </label>
+
+    <label class="checkbox-inline">
+      <input type="checkbox" name="checked" value="source" checked> Source
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="checked" value="sourceNumber" checked> Source Number
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="checked" value="barcode" checked> Barcode
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" name="checked" value="date" checked> Date
+    </label>
+    <hr>
+  <div id="form-group">
+    <div class="col-md-offset-2 col-md-6">
+      <input class="form-control btn btn-primary" id="submitbutton" type="submit" value="Query">
+    </div>
+  </div>
+</form>
+{% endblock %}

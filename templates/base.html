@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- Base html template which contains navigation bar -->
+<html>
+  <head>
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type='text/javascript' src="{{ url_for('static', filename='scripts/jquery-1.11.3.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css">
+    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+    <link href="{{ url_for('static', filename='content/navbar.css') }}" rel="stylesheet" media="all">
+    {% block script %}
+    {% endblock %}
+    <style>
+      .table-striped.table-hover > tbody > tr:hover > td,
+      .table-striped.table-hover > tbody > tr:hover > th {
+        background-color: #b8dcff !important;
+      }
+      .table-striped > tbody > tr:nth-child(odd) > td,
+      .table-striped > tbody > tr:nth-child(odd) > th {
+        background-color: #ebf5ff !important;
+      }
+      .table-striped>tbody>tr.rowchecked>td {
+        background-color: yellow !important;
+       }
+      .error {
+        color: red;
+      }
+      .success {
+        color: green;
+      }
+    </style>
+    {% block style %}
+    {% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Sample Inventory</a>
+        </div>
+        <div>
+          <ul class="nav navbar-nav">
+            <li {% if "/samples" in request.path %} class="active" {% endif %}><a href="{{ url_for('samples') }}">Samples</a></li>
+            <li {% if "/addSample" in request.path %} class="active" {% endif %}><a href="{{ url_for('addSample') }}">Add Sample</a></li>
+            <li {% if "/containers" in request.path %} class="active" {% endif %}><a href="{{ url_for('containers') }}">Containers</a></li>
+            <li {% if "/addContainer" in request.path %} class="active" {% endif %}><a href="{{ url_for('addContainer') }}">Add Containers</a></li>
+            <li {% if "/requests" in request.path %} class="active" {% endif %}><a href="{{ url_for('requests') }}">Requests</a></li>
+            <li {% if "/addRequest" in request.path %} class="active" {% endif %}><a href="{{ url_for('addRequest') }}">Add Request</a></li>
+            <li {% if "/query" in request.path %} class="active" {% endif %}><a href="{{ url_for('query') }}">Query</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+    {% block header %}{% endblock %}
+    {% with messages = get_flashed_messages() %}
+    {% for message in messages %}
+    {% if error %}
+    <p class="error">{{ message }}</p>
+    {% else %}
+    <p class="success">{{ message }}</p>
+    {% endif %}
+    {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>

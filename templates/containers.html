@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block script %}
+<script type='text/javascript' src="{{ url_for('static', filename='scripts/delete.js') }}"></script>
+{% endblock %}
+{% block style %}
+<style>
+  #edit, #deleteheader {
+    visibility: hidden;
+  }
+  .left {
+    display: table-row;
+  }
+  #deletedisplay, #pagination {
+    display: table-cell;
+  }
+  #containerTable {
+    font-size: 12px;
+  }
+</style>
+{% endblock %}
+{% block header %}
+<h1>Containers</h1>
+{% endblock %}
+{% block content %}
+<form id="delete" action="{{ url_for('delete', item='container') }}" method="post" onsubmit="return confirm('Delete the selected items?')">
+<table id="containerTable" class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th id="deleteheader"></th> <!-- Checkbox -->
+      <th>Sample Name</th>
+      <th>Container Type</th>
+      <th>Barcode</th>
+      <th>Amount</th>
+      <th>Freezer</th>
+      <th>Shelf</th>
+      <th>Rack</th>
+      <th>Box</th>
+      <th>Row</th>
+      <th>Col</th>
+      <th>Location</th>
+      <th>Storage Condition</th>
+      <th>Date</th>
+      <th id="edit"></th> <!-- Edit Sample -->
+    </tr>
+  </thead>
+  <tbody>
+  {% for c in containers %}
+    <tr id="{{ c.containerId }}">
+      <td><input type="checkbox" name="checked" value="{{ c.containerId }}"></td> <!-- Delete -->
+      <td>{{ c.sampleName }}</td>
+      <td>{{ c.containerType }}</td>
+      <td>{{ c.barcode }}</td>
+      <td>{{ c.amount ~ " " ~ c.amountUnits }}</td>
+      <td>{{ c.freezer }}</td>
+      <td>{{ c.shelf }}</td>
+      <td>{{ c.rack }}</td>
+      <td>{{ c.box }}</td>
+      <td>{{ c.row }}</td>
+      <td>{{ c.col }}</td>
+      <td>{{ c.location }}</td>
+      <td>{{ c.storageCondition }}</td>
+      <td>{{ c.date }}</td>
+      <td><a href="{{ url_for('editContainer', containerId=c.containerId) }}">Edit</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</form>
+<script>
+  $(document).ready(function() {
+     $('#containerTable').DataTable({
+       "lengthMenu": [ [50, 100, 150, -1], [50, 100, 150, "All"] ],
+       "dom": '<"left"l><"left"f><"left"<"pagination"p><"#deletedisplay">>t<"left"p>'
+     });
+  });
+</script>
+{% endblock %}

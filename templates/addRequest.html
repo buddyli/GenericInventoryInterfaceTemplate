@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block header %}
+<h1>Add Request</h1>
+{% endblock %}
+{% block content %}
+<form class="form-horizontal" action="{{ url_for('chooseContainer') }}" method="post" onsubmit="return confirm('Look for available containers?')">
+  <div class="form-group">
+    <label class="control-label col-md-2" for="sampleName">Sample Name:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="sampleName"
+        {% if sampleName %} value="{{ sampleName }}" readonly
+        {% elif prev['sampleName'] %} value="{{ prev['sampleName'] }}"
+        {% endif %} required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="requester">Requester:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="requester"
+        value="{{ prev['requester'] if prev['requester'] }}" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="deliveryTo">Delivery To:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="deliveryTo"
+        value="{{ prev['deliveryTo'] if prev['deliveryTo'] }}" required>
+    </div>
+    <label class="control-label col-md-2" for="deliveryBy">Delivery By:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="deliveryBy"
+        value="{{ prev['deliveryBy'] if prev['deliveryBy'] }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="deliveryGroup">Delivery Group:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="deliveryGroup"
+        value="{{ prev['deliveryGroup'] if prev['deliveryGroup'] }}">
+    </div>
+    <label class="control-label col-md-2" for="deliveryDate">Delivery Date:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="date" name="deliveryDate"
+        value="{{ prev['deliveryDate'] if prev['deliveryDate'] }}" pattern="[\d]{4}-[\d]{2}-[\d]{2}" title="Date format is yyyy-mm-dd">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="amount">Amount:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="number" name="amount" min="0" step="any"
+        value="{{ prev['amount'] if prev['amount'] }}" required>
+    </div>
+    <label class="control-label col-md-2" for="amountUnits">Amount Units:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="amountUnits"
+        value="{{ prev['amountUnits'] if prev['amountUnits'] }}" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-md-2" for="intendedUse">Intended Use:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="intendedUse"
+        value="{{ prev['intendedUse'] if prev['intendedUse'] }}">
+    </div>
+    <label class="control-label col-md-2" for="note">Note:</label>
+    <div class="col-md-2">
+      <input class="form-control" type="text" name="note"
+        value="{{ prev['note'] if prev['note'] }}">
+    </div>
+  </div>
+  <hr>
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-6">
+      <input type="submit" class=" form-control btn btn-primary" value="Choose Containers">
+    </div>
+  </div>
+</form>
+{% endblock %}

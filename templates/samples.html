@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block script %}
+<script type='text/javascript' src="{{ url_for('static', filename='scripts/delete.js') }}"></script>
+{% endblock %}
+{% block style %}
+<style>
+  #edit, #add, #viewC, #viewR, #deleteheader, #request {
+    visibility: hidden;
+  }
+  .left {
+    display: table-row;
+  }
+  #deletedisplay, #pagination {
+    display: table-cell;
+  }
+  #sampleTable {
+    font-size: 11px;
+  }
+</style>
+{% endblock %}
+{% block header %}
+{% if headers %}
+<h1>Query</h1>
+{% else %}
+<h1>Samples</h1>
+{% endif %}
+{% endblock %}
+{% block content %}
+<form id="delete" action="{{ url_for('delete', item='sample') }}" method="post" onsubmit="return confirm('Delete the selected items?')">
+<table id="sampleTable" class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th id="deleteheader"></th>
+      {% if headers %}
+        {% if "sampleName" in headers %}
+        <th>Sample Name</th>
+        {% endif %}
+        {% if "sampleType" in headers %}
+        <th>Sample Type</th>
+        {% endif %}
+        {% if "lot" in headers %}
+        <th>Lot</th>
+        {% endif %}
+        {% if "project" in headers %}
+        <th>Project</th>
+        {% endif %}
+        {% if "coreNumber" in headers %}
+        <th>Core Number</th>
+        {% endif %}
+        {% if "parentCore" in headers %}
+        <th>Parent Core</th>
+        {% endif %}
+        {% if "source" in headers %}
+        <th>Source</th>
+        {% endif %}
+        {% if "sourceNumber" in headers %}
+        <th>Source Number</th>
+        {% endif %}
+        {% if "barcode" in headers %}
+        <th>Barcode</th>
+        {% endif %}
+        {% if "date" in headers %}
+        <th>Date</th>
+        {% endif %}
+      {% else %}
+      <th>Sample Name</th>
+      <th>Sample Type</th>
+      <th>Lot</th>
+      <th>Project</th>
+      <th>Core Number</th>
+      <th>Parent Core</th>
+      <th>Source</th>
+      <th>Source Number</th>
+      <th>Barcode</th>
+      <th>Date</th>
+      {% endif %}
+      <th id="edit"></th> <!-- Edit Sample -->
+      <th id="add"></th> <!-- Add Containers -->
+      <th id="viewC"></th> <!-- View Containers -->
+      <th id="request"></th> <!-- Add Request -->
+      <th id="viewR"></th> <!-- View Requests -->
+    </tr>
+  </thead>
+  <tbody>
+  {% for s in samples %}
+    <tr id="{{ s.sampleId }}">
+      <td><input type="checkbox" name="checked" value="{{ s.sampleId }}"></td> <!-- Delete -->
+      {% if headers %}
+        {% if "sampleName" in headers %}
+        <td>{{ s.sampleName }}</td>
+        {% endif %}
+        {% if "sampleType" in headers %}
+        <td>{{ s.sampleType }}</td>
+        {% endif %}
+        {% if "lot" in headers %}
+        <td>{{ s.lot }}</td>
+        {% endif %}
+        {% if "project" in headers %}
+        <td>{{ s.project }}</td>
+        {% endif %}
+        {% if "coreNumber" in headers %}
+        <td>{{ s.coreNumber }}</td>
+        {% endif %}
+        {% if "parentCore" in headers %}
+        <td>{{ s.parentCore }}</td>
+        {% endif %}
+        {% if "source" in headers %}
+        <td>{{ s.source }}</td>
+        {% endif %}
+        {% if "sourceNumber" in headers %}
+        <td>{{ s.sourceNumber }}</td>
+        {% endif %}
+        {% if "barcode" in headers %}
+        <td>{{ s.barcode }}</td>
+        {% endif %}
+        {% if "date" in headers %}
+        <td>{{ s.date }}</td>
+        {% endif %}
+      {% else %}
+      <td>{{ s.sampleName }}</td>
+      <td>{{ s.sampleType }}</td>
+      <td>{{ s.lot }}</td>
+      <td>{{ s.project }}</td>
+      <td>{{ s.coreNumber }}</td>
+      <td>{{ s.parentCore }}</td>
+      <td>{{ s.source }}</td>
+      <td>{{ s.sourceNumber }}</td>
+      <td>{{ s.barcode }}</td>
+      <td>{{ s.date }}</td>
+      {% endif %}
+      <td><a href="{{ url_for('editSample', sampleId=s.sampleId) }}">Edit Sample</a></td>
+      <td><a href="{{ url_for('addContainer', sampleName=s.sampleName) }}">Add Container</a></td>
+      <td><a href="{{ url_for('containers', sampleName=s.sampleName) }}">View Containers</a></td>
+      <td><a href="{{ url_for('addRequest', sampleName=s.sampleName) }}">Add Request</a></td>
+      <td><a href="{{ url_for('requests', sampleName=s.sampleName) }}">View Requests</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</form>
+<script>
+  $(document).ready(function() {
+     $('#sampleTable').DataTable({
+       "lengthMenu": [ [50, 100, 150, -1], [50, 100, 150, "All"] ],
+       "dom": '<"left"l><"left"f><"left"<"pagination"p><"#deletedisplay">>t<"left"p>'
+     });
+  });
+</script>
+{% endblock %}

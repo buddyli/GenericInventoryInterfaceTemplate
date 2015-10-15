@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block script %}
+<script type='text/javascript' src="{{ url_for('static', filename='scripts/delete.js') }}"></script>
+{% endblock %}
+{% block style %}
+<style>
+  button:focus {
+    outline: 0 !important;
+  }
+  #edit, #deleteheader {
+    visibility: hidden;
+  }
+  #deletedisplay, #pagination {
+    display: table-cell;
+  }
+  .left {
+    display: table-row;
+  }
+</style>
+{% endblock %}
+{% block header %}
+<h1>Requests</h1>
+{% endblock %}
+{% block content %}
+<form id="delete" action="{{ url_for('delete', item='request') }}" method="post" onsubmit="return confirm('Delete the selected items?')">
+<table id="requestTable" class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th id="deleteheader"></th>
+      <th>Sample Name</th>
+      <th>Requester</th>
+      <th>Amount</th>
+      <th>Delivery To</th>
+      <th>Delivery By</th>
+      <th>Delivery Group</th>
+      <th>Delivery Date</th>
+      <th>Intended Use</th>
+      <th>Note</th>
+      <th id="edit"></th> <!-- Edit -->
+    </tr>
+  </thead>
+  <tbody>
+  {% for r in requests %}
+    <tr id="{{r.aliquotId }}">
+      <td><input type="checkbox" name="checked" value="{{ r.aliquotId }}"></td> <!-- Delete -->
+      <td>{{ r.sampleName }}</td>
+      <td>{{ r.requester }}</td>
+      <td>{{ r.amount ~ " " ~ r.amountUnits }}
+      <td>{{ r.deliveryTo }}</td>
+      <td>{{ r.deliveryBy }}</td>
+      <td>{{ r.deliveryGroup }}</td>
+      <td>{{ r.deliveryDate }}</td>
+      <td>{{ r.intendedUse }}</td>
+      <td>{{ r.note }}</td>
+      <td><a href="{{ url_for('editRequest', aliquotId=r.aliquotId) }}">Edit</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<script>
+  $(document).ready(function() {
+     $('#requestTable').DataTable({
+       "lengthMenu": [ [50, 100, 150, -1], [50, 100, 150, "All"] ],
+       "dom": '<"left"l><"left"f><"left"<"pagination"p><"#deletedisplay">>t<"left"p>'
+     });
+  });
+</script>
+{% endblock %}
